@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace WMI.HardDriveInformation
 {
-    class DiskSpec
+    internal class DiskSpec
     {
         private String PhysicalName { get; set; }
         private String DiskName { get; set; }
@@ -25,9 +25,9 @@ namespace WMI.HardDriveInformation
         private UInt64 NonFreeSpace { get; set; }
         private UInt64 FreeSpace { get; set; }
         private UInt64 TotalSpace { get; set; }
-        private UInt64 HDNonFreeSpace { get; set; }
-        private UInt64 HDFreeSpace { get; set; }
-        private UInt64 HDTotalSpace { get; set; }
+        private UInt64 HdNonFreeSpace { get; set; }
+        private UInt64 HdFreeSpace { get; set; }
+        private UInt64 HdTotalSpace { get; set; }
         private UInt32 DriveMediaType { get; set; }
         private String VolumeName { get; set; }
         private String VolumeSerial { get; set; }
@@ -72,8 +72,9 @@ namespace WMI.HardDriveInformation
             Console.WriteLine("DiskModel: {0}", DiskModel);
             Console.WriteLine("DiskInterface: {0}", DiskInterface);
             Console.WriteLine("SerialNumber: {0}", SerialNumber.Trim());
-            Console.WriteLine("FreeSpace: {0} bytes", HDFreeSpace);
+            Console.WriteLine("FreeSpace: {0} bytes", HdFreeSpace);
             Console.WriteLine("Size: {0}", Size);
+            Console.WriteLine("MediaSignature: {0}", MediaSignature);
             Console.WriteLine("MediaStatus: {0}", MediaStatus);
         }
 
@@ -99,8 +100,8 @@ namespace WMI.HardDriveInformation
             DiskName = Convert.ToString(d.Properties["Caption"].Value);
             DiskModel = Convert.ToString(d.Properties["Model"].Value);
 
-            HDTotalSpace = Convert.ToUInt64(d.Properties["Size"].Value); // in bytes
-            HDNonFreeSpace = HDTotalSpace - HDFreeSpace;
+            HdTotalSpace = Convert.ToUInt64(d.Properties["Size"].Value); // in bytes
+            HdNonFreeSpace = HdTotalSpace - HdFreeSpace;
             DiskInterface = Convert.ToString(d.Properties["InterfaceType"].Value);
             SerialNumber = Convert.ToString(d.Properties["SerialNumber"].Value); // bool
             Size = Convert.ToUInt64(d.Properties["Size"].Value); // Fixed hard disk media
@@ -120,7 +121,7 @@ namespace WMI.HardDriveInformation
             DriveMediaType = Convert.ToUInt32(ld.Properties["MediaType"].Value); // c: 12
             VolumeName = Convert.ToString(ld.Properties["VolumeName"].Value); // System
             VolumeSerial = Convert.ToString(ld.Properties["VolumeSerialNumber"].Value);
-            HDFreeSpace += FreeSpace;
+            HdFreeSpace += FreeSpace;
         }
     }
 }
