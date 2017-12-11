@@ -74,7 +74,6 @@ namespace WMI.HardDriveInformation
             Console.WriteLine("SerialNumber: {0}", SerialNumber.Trim());
             Console.WriteLine("FreeSpace: {0} bytes", HDFreeSpace);
             Console.WriteLine("Size: {0}", Size);
-            Console.WriteLine("MediaSignature: {0}", MediaSignature);
             Console.WriteLine("MediaStatus: {0}", MediaStatus);
         }
 
